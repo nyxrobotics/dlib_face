@@ -2,4 +2,8 @@
     <class name="dlib_face/face_detection_nodelet" type="dlib_face::FaceDetectionNodelet" base_class_type="nodelet::Nodelet">
         <description>Nodelet to detect face</description>
     </class>
+    <class name="dlib_face/face_recognition_nodelet" type="dlib_face::FaceRecognitionNodelet" base_class_type="nodelet::Nodelet">
+        <description>
+        </description>
+    </class>
 </library>
