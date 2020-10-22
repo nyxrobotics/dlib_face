@@ -1,0 +1,24 @@
+<launch>
+    <!-- nodelet -->
+    <arg name="launch_manager" default="true" />
+    <arg name="nodelet_manager" default="manager" />
+    <arg name="nodelet_manager_namespace" default="dlib_face" />
+    <!-- parameters -->
+    <arg name="queue_size" default="100" />
+    <arg name="hz" default="10" />
+    <arg name="control_hz" default="false" />
+    <arg name="model_path" default="$(env HOME)/.ros/dlib/models/mmod_human_face_detector.dat" />
+    <!-- remaps -->
+    <arg name="image" default="image" />
+
+    <group ns="$(arg nodelet_manager_namespace)">
+        <node if="$(arg launch_manager)" pkg="nodelet" type="nodelet" name="$(arg nodelet_manager)" args="manager" output="screen" launch-prefix="nice -n 20" />
+        <node pkg="nodelet" type="nodelet" name="face_detection" args="load dlib_face/face_detection_nodelet $(arg nodelet_manager)" output="screen" launch-prefix="nice -n 20">
+            <param name="queue_size" value="$(arg queue_size)" />
+            <param name="hz" value="$(arg hz)" />
+            <param name="control_hz" value="$(arg control_hz)" />
+            <param name="model_path" value="$(arg model_path)" />
+            <remap from="image" to="$(arg image)" />
+        </node>
+    </group>
+</launch>
