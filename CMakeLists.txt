@@ -3,11 +3,13 @@ project(dlib_face)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
+set(CMAKE_CXX_STANDARD 14)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+              cv_bridge
               image_transport
               message_generation
               nodelet
@@ -17,6 +19,8 @@ find_package(catkin REQUIRED COMPONENTS
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS thread)
+find_package(dlib REQUIRED
+             OpenCV REQUIRED)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -120,13 +124,15 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
   include
-  ${Boost_INCLUDE_DIR}
+  ${Boost_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
 add_library(${PROJECT_NAME} SHARED
   src/nodelet.cpp
+  src/face_detection_nodelet.cpp
 )
 
 ## Add cmake target dependencies of the library
@@ -154,6 +160,8 @@ target_link_libraries(
   ${PROJECT_NAME}
   ${Boost_LIBRARIES}
   ${catkin_LIBRARIES}
+  dlib::dlib
+  ${OpenCV_LIBRARIES}
 )
 
 #############
@@ -193,11 +201,8 @@ target_link_libraries(
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 
-# install(FILES
-#   # myfile1
-#   # myfile2
-#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-# )
+install(DIRECTORY launch
+        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 
 #############
 ## Testing ##
