@@ -18,7 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
               std_msgs)
 
 ## System dependencies are found with CMake's conventions
-find_package(Boost REQUIRED COMPONENTS thread)
+find_package(Boost REQUIRED COMPONENTS filesystem thread)
 find_package(dlib REQUIRED
              OpenCV REQUIRED)
 
@@ -61,11 +61,10 @@ add_message_files(
 )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+  FILES
+  SaveFace.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -133,6 +132,7 @@ include_directories(
 add_library(${PROJECT_NAME} SHARED
   src/nodelet.cpp
   src/face_detection_nodelet.cpp
+  src/face_recognition_nodelet.cpp
 )
 
 ## Add cmake target dependencies of the library
@@ -201,7 +201,7 @@ target_link_libraries(
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 
-install(DIRECTORY launch
+install(DIRECTORY launch scripts
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 
 #############
