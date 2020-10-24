@@ -5,7 +5,6 @@
 #include <boost/shared_ptr.hpp>
 #include <dlib/dnn.h>
 #include <dlib/graph_utils.h>
-#include <dlib/gui_widgets.h>
 #include <dlib/image_io.h>
 #include <dlib/image_processing.h>
 #include <dlib/opencv.h>

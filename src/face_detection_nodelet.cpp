@@ -3,7 +3,6 @@
 
 #include <dlib/data_io.h>
 #include <dlib/dnn.h>
-#include <dlib/gui_widgets.h>
 #include <dlib/image_processing.h>
 #include <dlib/opencv.h>
 #include <opencv2/imgproc/imgproc.hpp>
