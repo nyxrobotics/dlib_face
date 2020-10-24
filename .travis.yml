@@ -1,0 +1,8 @@
+language: generic
+services:
+  - docker
+env:
+  jobs:
+    - ROS_DISTRO=melodic
+script:
+  - .travis/travis.sh
