@@ -319,6 +319,7 @@ class FaceRecognitionNodelet : public dlib_face::Nodelet
   {
     image_sub_.unsubscribe();
     face_sub_.unsubscribe();
+    async_.reset();
   }
 
 public:
@@ -353,6 +354,12 @@ public:
     pnh_->param<std::string>("face_data_path", face_data_path, ".ros/dlib/face_data");
     face_data_path_ = boost::filesystem::path(face_data_path);
     classifier_ = Classifier(face_data_path_, k, threshold);
+  }
+
+  ~FaceRecognitionNodelet()
+  {
+    if (is_activated_)
+      unsubscribe();
   }
 };
 }  // namespace dlib_face
