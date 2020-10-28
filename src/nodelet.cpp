@@ -1,3 +1,5 @@
+// Copyright 2020 Tatsuro Sakaguchi<tacchan.mello.ioiq@gmail.com>
+
 #include <string>
 
 #include "dlib_face/nodelet.h"
