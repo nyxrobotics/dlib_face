@@ -1,9 +1,10 @@
+// Copyright 2020 Tatsuro Sakaguchi<tacchan.mello.ioiq@gmail.com>
+
 #include <string>
 #include <vector>
 
 #include <dlib/data_io.h>
 #include <dlib/dnn.h>
-#include <dlib/gui_widgets.h>
 #include <dlib/image_processing.h>
 #include <dlib/opencv.h>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -20,9 +21,9 @@ namespace dlib_face
 {
 /// mmod detection face network
 /// example code: http://dlib.net/dnn_mmod_face_detection_ex.cpp.html
-template <long num_filters, typename SUBNET>
+template <std::int32_t num_filters, typename SUBNET>
 using con5d = dlib::con<num_filters, 5, 5, 2, 2, SUBNET>;
-template <long num_filters, typename SUBNET>
+template <std::int32_t num_filters, typename SUBNET>
 using con5 = dlib::con<num_filters, 5, 5, 1, 1, SUBNET>;
 
 template <typename SUBNET>

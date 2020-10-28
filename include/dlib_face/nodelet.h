@@ -1,3 +1,5 @@
+// Copyright 2020 Tatsuro Sakaguchi<tacchan.mello.ioiq@gmail.com>
+
 #ifndef DLIB_FACE_NODELET_H_
 #define DLIB_FACE_NODELET_H_
 

@@ -1,11 +1,14 @@
+// Copyright 2020 Tatsuro Sakaguchi<tacchan.mello.ioiq@gmail.com>
+
+#include <algorithm>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include <boost/filesystem.hpp>
 #include <boost/shared_ptr.hpp>
 #include <dlib/dnn.h>
 #include <dlib/graph_utils.h>
-#include <dlib/gui_widgets.h>
 #include <dlib/image_io.h>
 #include <dlib/image_processing.h>
 #include <dlib/opencv.h>
@@ -87,7 +90,7 @@ public:
    * @param k Number of nearest candidates
    * @param threshold Distance threshold
    */
-  Classifier(const boost::filesystem::path& target_path, int k = 3, double threshold = 0.6)
+  explicit Classifier(const boost::filesystem::path& target_path, int k = 3, double threshold = 0.6)
     : k_(k), threshold_(threshold)
   {
     /// Glob collect label data from target_path
@@ -236,9 +239,10 @@ class FaceRecognitionNodelet : public dlib_face::Nodelet
         }
 
         // Store largest face to latest_descriptor_ (for save face service)
-        auto iter = std::max_element(faces->rects.begin(), faces->rects.end(), [](const auto& l, const auto& r) {
-          return l.width * l.height < r.width * r.height;
-        });
+        auto iter = std::max_element(faces->rects.begin(), faces->rects.end(),
+                                     [](const auto& l, const auto& r) {  // NOLINT(whitespace/braces)
+                                       return l.width * l.height < r.width * r.height;
+                                     });  // NOLINT(whitespace/braces)
         latest_descriptor_ = face_descriptors[std::distance(faces->rects.begin(), iter)];
       }
       // Publish the image.
@@ -289,7 +293,7 @@ class FaceRecognitionNodelet : public dlib_face::Nodelet
 
     // Assign consecutive number.
     int max_index = -1;
-    for (const auto& e : boost::make_iterator_range(boost::filesystem::directory_iterator(save_path), {}))
+    for (const auto& e : boost::make_iterator_range(boost::filesystem::directory_iterator(save_path)))
     {
       if (!boost::filesystem::is_directory(e))
         max_index = std::max(std::stoi(e.path().stem().string()), max_index);
@@ -356,7 +360,7 @@ public:
     classifier_ = Classifier(face_data_path_, k, threshold);
   }
 
-  ~FaceRecognitionNodelet()
+  ~FaceRecognitionNodelet() override
   {
     if (is_activated_)
       unsubscribe();
