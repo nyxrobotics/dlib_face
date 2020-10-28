@@ -360,7 +360,7 @@ public:
     classifier_ = Classifier(face_data_path_, k, threshold);
   }
 
-  ~FaceRecognitionNodelet()
+  ~FaceRecognitionNodelet() override
   {
     if (is_activated_)
       unsubscribe();
